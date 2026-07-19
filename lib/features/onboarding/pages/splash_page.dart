@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/loading_indicator.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/loading_indicator.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -75,11 +75,13 @@ class _SplashPageState extends State<SplashPage>
               children: [
                 // Logo
                 Container(
-                  width: 150,
+                  width: 125,
 
-                  height: 150,
+                  height: 125,
 
-                  child: Center(child: Image.asset("assets/images/icone.png")),
+                  child: Center(
+                    child: SvgPicture.asset("assets/icons/icone.svg"),
+                  ),
                 ),
 
                 Container(

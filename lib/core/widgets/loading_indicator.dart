@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_colors.dart';
 
 class LoadingIndicator extends StatefulWidget {
   const LoadingIndicator({super.key});
@@ -27,35 +27,36 @@ class _LoadingIndicatorState extends State<LoadingIndicator>
     return AnimatedBuilder(
       animation: _controller,
       builder: (_, __) {
-        final value = _controller.value;
-
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _dot(AppColors.blue, value, 0.0),
-            const SizedBox(width: 10),
-            _dot(AppColors.yellow, value, 0.33),
-            const SizedBox(width: 10),
-            _dot(AppColors.primary, value, 0.66),
+            _dot(AppColors.blue, 0.0),
+            const SizedBox(width: 12),
+            _dot(AppColors.yellow, 0.2),
+            const SizedBox(width: 12),
+            _dot(AppColors.primary, 0.4),
           ],
         );
       },
     );
   }
 
-  Widget _dot(Color color, double value, double delay) {
-    double animation = (value - delay);
+  Widget _dot(Color color, double delay) {
+    double value = (_controller.value + delay) % 1;
 
-    if (animation < 0) animation += 1;
+    final translate = -8 * (1 - (value * 2 - 1).abs());
 
-    final scale = 0.7 + (1 - (animation * 2 - 1).abs()) * 0.6;
+    final opacity = 0.5 + (1 - (value * 2 - 1).abs()) * 0.5;
 
-    return Transform.scale(
-      scale: scale,
-      child: Container(
-        width: 12,
-        height: 12,
-        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+    return Transform.translate(
+      offset: Offset(0, translate),
+      child: Opacity(
+        opacity: opacity,
+        child: Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
       ),
     );
   }
